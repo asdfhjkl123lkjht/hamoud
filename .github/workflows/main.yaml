@@ -26,8 +26,6 @@ jobs:
          buildozer -v android debug
 
       - name: Upload APK
-        uses: actions/setup-dotnet@v3.4.0
-        with:
-          name: kivy-apk
-          path: bin/*.apk
+        uses: actions/upload-artifact@v3.6.0
+       
           
