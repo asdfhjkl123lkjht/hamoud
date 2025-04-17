@@ -17,7 +17,6 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y python3-pip zip unzip openjdk-11-jdk
-          Cython (cython) not found, please install it.
           pip install --upgrade pip
           pip install buildozer
 
