@@ -20,7 +20,6 @@ jobs:
           sudo apt install -y python3-pip zip unzip openjdk-11-jdk
           pip install --upgrade pip
           pip install buildozer cython
-          pip install Aidl
 
       - name: Build APK
         run: | 
