@@ -20,6 +20,7 @@ jobs:
           sudo apt install -y git build-essential libncurses5 libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
           pip install --upgrade pip
           pip install buildozer
+          pip Install dependencies
 
       - name: Build APK
         run: | 
