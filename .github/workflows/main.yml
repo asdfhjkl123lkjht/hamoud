@@ -13,11 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install buildozer
+      - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y python3-pip zip unzip openjdk-11-jdk
-          sudo apt install -y git build-essential libncurses5 libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
+          sudo apt install -y git build-essential libncurses libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
           pip install --upgrade pip
           pip install buildozer
 
