@@ -15,21 +15,24 @@ jobs:
 
       - name: Install dependencies
         run: |
-         sudo apt install -y git build-essential libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
-         sudo apt update
-         sudo apt install -y python3-pip zip unzip openjdk-11-jdk
-         pip install --upgrade pip
-         pip install buildozer cython
-         # Install Android SDK and build-tools
-         sudo apt install -y wget
-         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-         mkdir -p $HOME/android-sdk/cmdline-tools
-         unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
-         mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
-         export ANDROID_HOME=$HOME/android-sdk
-         export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-         yes | sdkmanager --licenses
-         sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+         sudo apt install -y git build-essential/android-sdk/cmdline-tools
+          mv $HOME/android-sdk libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
+          sudo apt update
+          sudo apt install/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          export ANDROID_HOME=$HOME/android -y python3-pip zip unzip openjdk-11-jdk
+          pip install --upgrade pip
+          pip install buildozer cython
+          # Install Android SDK and build-tools
+          sudo apt-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest install -y wget
+          wget https://dl.google.com/android/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build/repository/commandlinetools-linux-9477386_latest.zip-tools/30.0.3:$PATH
+          yes | sdkmanager --licenses -O cmdline-tools.zip
+          mkdir -p $HOME/android-sdk
+          sdkmanager "platform-tools/cmdline-tools
+          unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk" "platforms;android/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          export ANDROID_HOME=$HOME/android-30" "build-tools;30.0.3" "system-images;android-30-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest;default;x86_64"
 
       - name: Build APK
         run: | 
