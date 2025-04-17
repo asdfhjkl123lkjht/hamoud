@@ -13,7 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies6
+      - name: Install dependencies
+          used to cache dependencies with a timeout
         run: |
           sudo apt update
           sudo apt install -y python3-pip zip unzip openjdk-11-jdk
