@@ -411,7 +411,7 @@ warn_on_root = 1
 # build_dir = ./.buildozer
 
 # (str) Path to build output (i.e. .apk, .aab, .ipa) storage
-bin_dir = ./bin
+#bin_dir = ./bin
 
 #    -----------------------------------------------------------------------------
 #    List as sections
@@ -449,4 +449,4 @@ bin_dir = ./bin
 #
 #    Then, invoke the command line with the "demo" profile:
 #
-buildozer --profile demo android debug
+#buildozer --profile demo android debug
