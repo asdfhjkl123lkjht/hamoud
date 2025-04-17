@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Install libncurses5
         run: |
           sudo apt update
           sudo apt install -y python3-pip zip unzip openjdk-11-jdk
