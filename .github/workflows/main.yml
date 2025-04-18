@@ -21,10 +21,20 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
           
-      - name: Install Android SDK Build Tools
+      - name: Install Android SDK components
         run: |
-           yes | sdkmanager
-           "buid-tools;30.0.3" "platfrom-tools" "platfroms;android-30"
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools"
+          sdkmanager "platforms;android-33"
+          sdkmanager "build-tools;33.0.2"
+          sdkmanager "platforms;android-32"
+          sdkmanager "build-tools;32.0.0"
+          sdkmanager "platforms;android-31"
+          sdkmanager "build-tools;31.0.0"
+          sdkmanager "platforms;android-30"
+          sdkmanager "build-tools;30.0.3"
+          sdkmanager "ndk;21.4.7075529"
+          sdkmanager "cmake;3.10.2.4988404"
 
       - name: Build APK
         run: | 
