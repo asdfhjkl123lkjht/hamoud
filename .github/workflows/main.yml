@@ -18,6 +18,14 @@ jobs:
           sudo apt update && sudo apt upgrade -y
           sudo apt install -y unzip git curl openjdk-11-jdk build-essential
 
+      - name: Install dependencies
+        run: |
+          sudo apt install -y git build-essential libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
+          sudo apt update
+          sudo apt install -y python3-pip zip unzip openjdk-11-jdk
+          pip install --upgrade pip
+          pip install buildozer cython
+
       - name: Install Android SDK and dependencies
         run: |
           export ANDROID_HOME=$HOME/Android/Sdk
