@@ -15,34 +15,46 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install -y git build-essential libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
           sudo apt update
-          sudo apt install -y python3-pip zip unzip openjdk-11-jdk
+          sudo apt install -y git build-essential libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev python3-pip zip unzip openjdk-11-jdk wget
           pip install --upgrade pip
           pip install buildozer cython
-          
+
+      - name: Install Android SDK
+        run: |
+          sudo mkdir -p /usr/lib/android-sdk/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
+          sudo unzip cmdline-tools.zip -d /usr/lib/android-sdk/cmdline-tools
+          sudo mv /usr/lib/android-sdk/cmdline-tools/cmdline-tools /usr/lib/android-sdk/cmdline-tools/latest
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          sdkmanager --version
+
       - name: Install Android SDK components
         run: |
-          yes | sdkmanager licenses
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          yes | sdkmanager --licenses
           sdkmanager "platform-tools"
           sdkmanager "platforms;android-33"
           sdkmanager "build-tools;33.0.2"
-          sdkmanager "platforms;android-32"
-          sdkmanager "build-tools;32.0.0"
-          sdkmanager "platforms;android-31"
-          sdkmanager "build-tools;36.0.0"
-          sdkmanager "platforms;android-36"
-          sdkmanager "build-tools;36.0.3"
           sdkmanager "ndk;21.4.7075529"
           sdkmanager "cmake;3.10.2.4988404"
 
+      - name: Verify AIDL
+        run: |
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          if ! which aidl; then
+            echo "AIDL tool is missing. Please verify the build-tools installation." && exit 1
+          fi
+
       - name: Build APK
-        run: | 
-         buildozer android debug
+        run: |
+          buildozer android debug
 
       - name: Upload APK
-        uses: 'actions/checkout@v3'
-        
+        uses: actions/upload-artifact@v3
         with:
           name: kivy-apk
           path: bin/*.apk
