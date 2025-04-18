@@ -1,4 +1,4 @@
-name: Setup Android Environment
+name: Build APK from Kivy
 
 on:
   push:
@@ -10,28 +10,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install basic dependencies
+      - name: Install dependencies
         run: |
-          sudo apt update && sudo apt upgrade -y
-          sudo apt install -y unzip git curl openjdk-11-jdk build-essential
+          sudo apt install -y git build-essential libffi-dev libssl-dev libsqlite3-dev libjpeg-dev zlib1g-dev
+          sudo apt update
+          sudo apt install -y python3-pip zip unzip openjdk-11-jdk
+          pip install --upgrade pip
+          pip install buildozer cython
+          
+      - name: Install Android SDK
+        run: |
+          sudo mkdir -p /usr/lib/android-sdk/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
+          sudo unzip cmdline-tools.zip -d /usr/lib/android-sdk/cmdline-tools
+          sudo mv /usr/lib/android-sdk/cmdline-tools/cmdline-tools /usr/lib/android-sdk/cmdline-tools/latest
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          sdkmanager --version
 
-      - name: Install Android SDK and dependencies
+      - name: Install Android SDK components
         run: |
-          export ANDROID_HOME=$HOME/Android/Sdk
-          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
-          mkdir -p $ANDROID_HOME/cmdline-tools
-          curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-          unzip commandlinetools.zip -d $ANDROID_HOME/cmdline-tools
-          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34"
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools"
+          sdkmanager "platforms;android-33"
+          sdkmanager "build-tools;33.0.2"
+          sdkmanager "ndk;21.4.7075529"
+          sdkmanager "cmake;3.10.2.4988404"
 
-      - name: Verify installation
-        run: |
-          echo "Android SDK installed successfully!"
-          ls $ANDROID_HOME/platform-tools
-          ls $ANDROID_HOME/build-tools/34.0.0
-          ls $ANDROID_HOME/platforms/android-34
+      - name: Build APK
+        run: | 
+          buildozer android debug
+
+      - name: Upload APK
+        uses: 'actions/upload-artifact@v3'
+        with:
+          name: kivy-apk
+          path: bin/*.apk
