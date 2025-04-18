@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Android SDK installed successfully!"
           ls $ANDROID_HOME/platform-tools
-          ls $ANDROID_HOME/build-tools/34.0.0
+          ls $ANDROID_HOME/build-tools/36.0.0
           ls $ANDROID_HOME/platforms/android-34
 
       - name: Verify AIDL
