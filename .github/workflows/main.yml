@@ -59,7 +59,7 @@ jobs:
            sdkmanager "build-tools;33.0.2"  # Ensure build-tools are installed
            sdkmanager "ndk;21.4.7075529"
            sdkmanager "cmake;3.10.2.4988404"
-           sdkmanager "build-tools;35.0.2"
+           sdkmanager "build-tools;33.0.2"
            
 
       - name: Verify AIDL
