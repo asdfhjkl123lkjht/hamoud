@@ -67,6 +67,7 @@ jobs:
            if ! which aidl; then
              echo "AIDL tool is missing. Please verify the build-tools installation." && exit 1
            fi
+           sudo apt install -y aidl
 
       - name: Build APK
         run: | 
