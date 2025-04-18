@@ -34,7 +34,7 @@ jobs:
         run: |
            export ANDROID_HOME=/usr/lib/android-sdk
            export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
-           yes | licenses
+           yes |
            sdkmanager "platform-tools"
            sdkmanager "platforms;android-33"
            sdkmanager "build-tools;33.0.2"  # Ensure build-tools are installed
