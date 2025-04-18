@@ -43,6 +43,7 @@ jobs:
           ls $ANDROID_HOME/platform-tools
           ls $ANDROID_HOME/build-tools/36.0.0
           ls $ANDROID_HOME/platforms/android-34
+          Is $ANDROTD_HOME/home/runner/.buildozer/android/platform/android-sdk/build-tools
 
       - name: Verify AIDL
         run: |
