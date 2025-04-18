@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Android SDK installed successfully!"
           ls $ANDROID_HOME/platform-tools
-          ls $ANDROID_HOME/build-tools/34.0.0
+          ls $ANDROID_HOME/build-tools/36.0.0
           ls $ANDROID_HOME/platforms/android-34
           
 
@@ -49,6 +49,17 @@ jobs:
         run: |
           export ANDROID_HOME=/usr/lib/android-sdk
           export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+
+      - name: Install Android SDK components
+        run: |
+          export ANDROID_HOME=/usr/lib/android-sdk
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools"
+          sdkmanager "platforms;android-34"
+          sdkmanager "build-tools;36.0.0"  # Ensure build-tools are installed
+          sdkmanager "ndk;21.4.7075529"
+          sdkmanager "cmake;3.10.2.4988404"
 
       - name: Build APK
         run: |
