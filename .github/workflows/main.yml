@@ -59,6 +59,8 @@ jobs:
            sdkmanager "build-tools;33.0.2"  # Ensure build-tools are installed
            sdkmanager "ndk;21.4.7075529"
            sdkmanager "cmake;3.10.2.4988404"
+           sdkmanager "build-tools;35.0.0
+           
 
       - name: Verify AIDL
         run: |
@@ -67,7 +69,6 @@ jobs:
            if ! which aidl; then
              echo "AIDL tool is missing. Please verify the build-tools installation." && exit 1
            fi
-           sudo apt install -y aidl
 
       - name: Build APK
         run: | 
